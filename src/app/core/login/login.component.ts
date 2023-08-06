@@ -21,7 +21,7 @@ export class LoginComponent {
     });
     const buttonContainer = document.getElementById("google-button");
     if (!buttonContainer)
-      throw new Error("No google-button elementt found");
+      throw new Error("No google-button element found");
     google.accounts.id.renderButton(
       buttonContainer,
       { theme: "outline", size: "large", type: "standard" }
@@ -30,7 +30,6 @@ export class LoginComponent {
   }
 
   async handleCredentialResponse(response: { credential: string }) {
-    // Here will be your response from Google.
     const decodedToken: { name: string, email: string, exp: number } = jwt_decode(response.credential);
     const user: User = {
       name: decodedToken.name,
