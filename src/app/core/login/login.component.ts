@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
+import { Router } from '@angular/router';
 import jwt_decode from "jwt-decode";
 import { AuthService } from '../auth.service';
 import { User } from '../user';
@@ -9,7 +10,7 @@ import { User } from '../user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router, private ngZone: NgZone) {
   }
   ngOnInit() {
     google.accounts.id.initialize({
@@ -17,7 +18,6 @@ export class LoginComponent {
       callback: this.handleCredentialResponse.bind(this),
       auto_select: false,
       cancel_on_tap_outside: true,
-
     });
     const buttonContainer = document.getElementById("google-button");
     if (!buttonContainer)
@@ -28,6 +28,7 @@ export class LoginComponent {
     );
     google.accounts.id.prompt((n: google.accounts.id.PromptMomentNotification) => { })
   }
+
   async handleCredentialResponse(response: { credential: string }) {
     // Here will be your response from Google.
     const decodedToken: { name: string, email: string, exp: number } = jwt_decode(response.credential);
@@ -38,5 +39,6 @@ export class LoginComponent {
       token: response.credential
     };
     this.authService.setSession(user);
+    this.ngZone.run(() => this.router.navigate(['/']));
   }
 }

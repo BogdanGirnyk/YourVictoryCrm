@@ -17,6 +17,11 @@ export class AuthService {
     localStorage.removeItem(storageKey);
   }
 
-  public isLoggedIn() {
+  public isLoggedIn(): boolean {
+    const savedCurrUserString = localStorage.getItem(storageKey);
+    if (!savedCurrUserString)
+      return false;
+    const user = JSON.parse(savedCurrUserString) as User;
+    return Date.now() <= user.expiresAt * 1000;
   }
 }
