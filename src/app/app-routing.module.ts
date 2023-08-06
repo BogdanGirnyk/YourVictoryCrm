@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RoomsComponent } from './rooms/rooms.component';
-import { ScheduleComponent } from './schedule/schedule.component';
+import { RoomsComponent } from './crm/rooms/rooms.component';
+import { ScheduleComponent } from './crm/schedule/schedule.component';
 
 const routes: Routes = [
   {
